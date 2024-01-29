@@ -136,6 +136,5 @@ class JadwalMagangController extends Controller
         // $pdf->setPaper('a4', 'landscape');
 
         // return $pdf->stream('index.pdf');
-        //
     }
 }
