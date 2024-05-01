@@ -20,61 +20,63 @@ use App\Http\Controllers\TempatMagangController;
 |
 */
 
-// Jadwal Magang
-Route::get('/jadwalMagang', [JadwalMagangController::class, 'index'])->middleware('auth');
+Route::middleware('auth')->group(function () {
+    // Jadwal Magang
+    Route::get('/jadwalMagang', [JadwalMagangController::class, 'index'])->middleware('auth');
 
-Route::get('/jadwalMagang/create', [JadwalMagangController::class, 'create']);
+    Route::get('/jadwalMagang/create', [JadwalMagangController::class, 'create']);
 
-Route::post('/jadwalMagang/store', [JadwalMagangController::class, 'store']);
+    Route::post('/jadwalMagang/store', [JadwalMagangController::class, 'store']);
 
-Route::get('/jadwalMagang/edit/{id}', [JadwalMagangController::class, 'edit']);
+    Route::get('/jadwalMagang/edit/{id}', [JadwalMagangController::class, 'edit']);
 
-Route::post('/jadwalMagang/update/{id}', [JadwalMagangController::class, 'update']);
+    Route::post('/jadwalMagang/update/{id}', [JadwalMagangController::class, 'update']);
 
-Route::get('/jadwalMagang/delete/{id}', [JadwalMagangController::class, 'delete']);
+    Route::get('/jadwalMagang/delete/{id}', [JadwalMagangController::class, 'delete']);
 
-Route::get('/jadwalMagang/print', [JadwalMagangController::class, 'print'])->name('jadwalMagang.print');
-
-
-// Mahasiswa
-Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index')->middleware('auth');
-
-Route::get('/mahasiswa/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
-
-Route::post('/mahasiswa/store', [MahasiswaController::class, 'store']);
-
-Route::get('/mahasiswa/edit/{nim}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
-
-Route::post('/mahasiswa/update/{nim}', [MahasiswaController::class, 'update']);
-
-Route::get('/mahasiswa/delete/{nim}', [MahasiswaController::class, 'delete'])->name('mahasiswa.destroy');
-
-// Dospem
-Route::get('/dospem', [DospemController::class, 'index'])->middleware('auth');
-
-Route::get('/dospem/create', [DospemController::class, 'create']);
-
-Route::post('/dospem/store', [DospemController::class, 'store']);
-
-Route::get('/dospem/edit/{nik}', [DospemController::class, 'edit']);
-
-Route::post('/dospem/update/{nik}', [DospemController::class, 'update']);
-
-Route::get('/dospem/delete/{nik}', [DospemController::class, 'delete']);
+    Route::get('/jadwalMagang/print', [JadwalMagangController::class, 'print'])->name('jadwalMagang.print');
 
 
-// Tempat Magang
-Route::get('/tempatMagang', [TempatMagangController::class, 'index'])->middleware('auth');
+    // Mahasiswa
+    Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index')->middleware('auth');
 
-Route::get('/tempatMagang/create', [TempatMagangController::class, 'create']);
+    Route::get('/mahasiswa/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
 
-Route::post('/tempatMagang/store', [TempatMagangController::class, 'store']);
+    Route::post('/mahasiswa/store', [MahasiswaController::class, 'store']);
 
-Route::get('/tempatMagang/edit/{id}', [TempatMagangController::class, 'edit']);
+    Route::get('/mahasiswa/edit/{nim}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
 
-Route::post('/tempatMagang/update/{id}', [TempatMagangController::class, 'update']);
+    Route::post('/mahasiswa/update/{nim}', [MahasiswaController::class, 'update']);
 
-Route::get('/tempatMagang/delete/{id}', [TempatMagangController::class, 'delete']);
+    Route::get('/mahasiswa/delete/{nim}', [MahasiswaController::class, 'delete'])->name('mahasiswa.destroy')->middleware('auth');
+
+    // Dospem
+    Route::get('/dospem', [DospemController::class, 'index'])->middleware('auth');
+
+    Route::get('/dospem/create', [DospemController::class, 'create']);
+
+    Route::post('/dospem/store', [DospemController::class, 'store']);
+
+    Route::get('/dospem/edit/{nik}', [DospemController::class, 'edit']);
+
+    Route::post('/dospem/update/{nik}', [DospemController::class, 'update']);
+
+    Route::get('/dospem/delete/{nik}', [DospemController::class, 'delete']);
+
+
+    // Tempat Magang
+    Route::get('/tempatMagang', [TempatMagangController::class, 'index'])->middleware('auth');
+
+    Route::get('/tempatMagang/create', [TempatMagangController::class, 'create']);
+
+    Route::post('/tempatMagang/store', [TempatMagangController::class, 'store']);
+
+    Route::get('/tempatMagang/edit/{id}', [TempatMagangController::class, 'edit']);
+
+    Route::post('/tempatMagang/update/{id}', [TempatMagangController::class, 'update']);
+
+    Route::get('/tempatMagang/delete/{id}', [TempatMagangController::class, 'delete']);
+});
 
 
 // Login

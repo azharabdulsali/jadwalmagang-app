@@ -3,7 +3,7 @@
 @section('container')
     <h1>Data {{ $title }}</h1>
     <div class="card card-bordered border-gray-300">
-        <div class="card-header px-6 h-80px">
+        <div class="card-header px-6">
             <div class="card-title">
                 <form action="{{ route('mahasiswa.index') }}" method="get" class="d-flex gap-3">
                     <div>
@@ -18,9 +18,8 @@
                     </div>
                 </form>
             </div>
-
-            <div class="card-toolbar">
-                <a href="{{ route('mahasiswa.create') }}" class="btn btn-link btn-color-primary" title="Tambah">
+            <div class="d-flex">
+                <a href="{{ route('mahasiswa.create') }}" class="btn btn-primary" title="Tambah">
                     <i class="bi bi-plus-lg"></i>Tambah</a>
             </div>
         </div>
@@ -47,7 +46,8 @@
                             <td>{{ $data['semester'] }}</td>
                             <td class="text-center d-flex gap-2 justify-content-center">
                                 <a href="{{ route('mahasiswa.edit', $data->nim) }}" class="btn btn-info">Edit</a>
-                                <form action="{{ route('mahasiswa.destroy', $data->nim) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                <form action="{{ route('mahasiswa.destroy', $data->nim) }}" method="GET"
+                                    onsubmit="return confirm('Are you sure?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -65,7 +65,7 @@
             $(document).ready(function() {
                 $('#search').on('input', function() {
                     let searchQuery = $(this).val().toLowerCase().trim();
-                    if(searchQuery.length > 0){
+                    if (searchQuery.length > 0) {
                         filterMahasiswa(searchQuery);
                     } else {
                         $('.table tbody tr').show();
@@ -76,8 +76,9 @@
                     $('.table tbody tr').each(function() {
                         let nim = $(this).find('td:nth-child(2)').text().toLowerCase().trim();
                         let nama = $(this).find('td:nth-child(3)').text().toLowerCase().trim();
-                        let matches = nim.includes(searchQuery) || nama.includes(searchQuery);
-                        $(this).toggle(matches);
+                        let matchesNim = nim.includes(searchQuery);
+                        let matchesNama = nama.includes(searchQuery);
+                        $(this).toggle(matchesNim || matchesNama);
                     });
                 }
             });

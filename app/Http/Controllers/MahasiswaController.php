@@ -10,23 +10,30 @@ use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $mahasiswa = Mahasiswa::query()
-        ->select('mahasiswa.*', 'prodi.nama as prodi')
-        ->join('prodi', 'mahasiswa.prodi_id', '=', 'prodi.id')
-        ->get();
+        $searchQuery = $request->input('search');
 
-    return view('mahasiswa.index', [
-        'title' => 'Mahasiswa',
-        'mahasiswa' => $mahasiswa
-    ]);
+        $mahasiswa = Mahasiswa::query()
+            ->select('mahasiswa.*', 'prodi.nama as prodi')
+            ->join('prodi', 'mahasiswa.prodi_id', '=', 'prodi.id')
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                $query->where('mahasiswa.nim', 'like', "%$searchQuery%")
+                    ->orWhere('mahasiswa.nama', 'like', "%$searchQuery%");
+            })
+            ->get();
+
+        return view('mahasiswa.index', [
+            'title' => 'Mahasiswa',
+            'mahasiswa' => $mahasiswa
+        ]);
     }
+
 
     public function create()
     {
         $prodi = \App\Models\Prodi::all();
-    
+
         return view('mahasiswa.create', [
             'title' => 'Tambah Mahasiswa',
             'prodi' => $prodi
@@ -52,22 +59,22 @@ class MahasiswaController extends Controller
         return redirect('/mahasiswa');
     }
 
-public function edit($nim)
-{
-    $mahasiswa = DB::table('mahasiswa')
-        ->select('mahasiswa.*', 'prodi.nama as prodi')
-        ->join('prodi', 'mahasiswa.prodi_id', '=', 'prodi.id')
-        ->where('nim', $nim)
-        ->get();
+    public function edit($nim)
+    {
+        $mahasiswa = DB::table('mahasiswa')
+            ->select('mahasiswa.*', 'prodi.nama as prodi')
+            ->join('prodi', 'mahasiswa.prodi_id', '=', 'prodi.id')
+            ->where('nim', $nim)
+            ->get();
 
-    $prodi = \App\Models\Prodi::all();
+        $prodi = \App\Models\Prodi::all();
 
-    return view('mahasiswa.edit', [
-        'mahasiswa' => $mahasiswa,
-        'prodi' => $prodi,
-        'title' => 'Mahasiswa'
-    ]);
-}
+        return view('mahasiswa.edit', [
+            'mahasiswa' => $mahasiswa,
+            'prodi' => $prodi,
+            'title' => 'Mahasiswa'
+        ]);
+    }
 
     public function update($nim)
     {
@@ -82,8 +89,7 @@ public function edit($nim)
 
     public function delete($nim)
     {
-        DB::table('mahasiswa') -> where ('nim', $nim) -> delete();
-
+        Mahasiswa::where('nim', $nim)->delete();
         return redirect('/mahasiswa');
     }
 }
