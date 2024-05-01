@@ -37,7 +37,7 @@ Route::get('/jadwalMagang/print', [JadwalMagangController::class, 'print'])->nam
 
 
 // Mahasiswa
-Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->middleware('auth'); 
+Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index')->middleware('auth');
 
 Route::get('/mahasiswa/create', [MahasiswaController::class, 'create']);
 

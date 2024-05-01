@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mahasiswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,7 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $mahasiswa = \App\Models\Mahasiswa::query()
+        $mahasiswa = Mahasiswa::query()
         ->select('mahasiswa.*', 'prodi.nama as prodi')
         ->join('prodi', 'mahasiswa.prodi_id', '=', 'prodi.id')
         ->get();
