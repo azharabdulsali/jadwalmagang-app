@@ -39,13 +39,15 @@ class MahasiswaController extends Controller
             'nama' => request('nama'),
             'prodi_id' => request('prodi_id'),
             'semester' => request('semester'),
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
-        $user = new User();
-        $user->username = request('nim');
-        $user->password = Hash::make("mahasiswa");
-        $user->role = 'mahasiswa';
-        $user->
-        $user->save();
+        // $user = new User();
+        // $user->username = request('nim');
+        // $user->password = Hash::make("mahasiswa");
+        // $user->role = 'mahasiswa';
+        // $user->
+        // $user->save();
         return redirect('/mahasiswa');
     }
 
