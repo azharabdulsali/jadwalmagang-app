@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                     @foreach ($mahasiswa as $data)
-                        <tr> 
+                        <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data['nim'] }}</td>
                             <td>{{ $data['nama'] }}</td>
