@@ -39,15 +39,15 @@ Route::get('/jadwalMagang/print', [JadwalMagangController::class, 'print'])->nam
 // Mahasiswa
 Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.index')->middleware('auth');
 
-Route::get('/mahasiswa/create', [MahasiswaController::class, 'create']);
+Route::get('/mahasiswa/create', [MahasiswaController::class, 'create'])->name('mahasiswa.create');
 
 Route::post('/mahasiswa/store', [MahasiswaController::class, 'store']);
 
-Route::get('/mahasiswa/edit/{nim}', [MahasiswaController::class, 'edit']);
+Route::get('/mahasiswa/edit/{nim}', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
 
 Route::post('/mahasiswa/update/{nim}', [MahasiswaController::class, 'update']);
 
-Route::get('/mahasiswa/delete/{nim}', [MahasiswaController::class, 'delete']);
+Route::get('/mahasiswa/delete/{nim}', [MahasiswaController::class, 'delete'])->name('mahasiswa.destroy');
 
 // Dospem
 Route::get('/dospem', [DospemController::class, 'index'])->middleware('auth');

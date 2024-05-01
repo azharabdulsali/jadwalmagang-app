@@ -20,7 +20,7 @@
             </div>
 
             <div class="card-toolbar">
-                <a href="/mahasiswa/create" class="btn btn-link btn-color-primary" title="Tambah">
+                <a href="{{ route('mahasiswa.create') }}" class="btn btn-link btn-color-primary" title="Tambah">
                     <i class="bi bi-plus-lg"></i>Tambah</a>
             </div>
         </div>
@@ -38,17 +38,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($mahasiswa as $mahasiswa)
+                    @foreach ($mahasiswa as $data)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $mahasiswa['nim'] }}</td>
-                            <td>{{ $mahasiswa['nama'] }}</td>
-                            <td>{{ $mahasiswa['prodi'] }}</td>
-                            <td>{{ $mahasiswa['semester'] }}</td>
+                            <td>{{ $data['nim'] }}</td>
+                            <td>{{ $data['nama'] }}</td>
+                            <td>{{ $data['prodi'] }}</td>
+                            <td>{{ $data['semester'] }}</td>
                             <td class="text-center d-flex gap-2 justify-content-center">
-                                <a href="/mahasiswa/edit/{{ $mahasiswa->nim }}" class="btn btn-info">Edit</a>
-                                <a href="/mahasiswa/delete/{{ $mahasiswa->nim }}" onclick="return confirm('Are you sure?')"
-                                    class="btn btn-danger">Delete</a>
+                                <a href="{{ route('mahasiswa.edit', $data->nim) }}" class="btn btn-info">Edit</a>
+                                <form action="{{ route('mahasiswa.destroy', $data->nim) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -61,8 +64,12 @@
         <script>
             $(document).ready(function() {
                 $('#search').on('input', function() {
-                    let searchQuery = $(this).val().toLowerCase();
-                    filterMahasiswa(searchQuery);
+                    let searchQuery = $(this).val().toLowerCase().trim();
+                    if(searchQuery.length > 0){
+                        filterMahasiswa(searchQuery);
+                    } else {
+                        $('.table tbody tr').show();
+                    }
                 });
 
                 function filterMahasiswa(searchQuery) {
