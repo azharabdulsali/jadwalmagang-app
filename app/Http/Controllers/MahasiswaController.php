@@ -29,7 +29,6 @@ class MahasiswaController extends Controller
         ]);
     }
 
-
     public function create()
     {
         $prodi = \App\Models\Prodi::all();

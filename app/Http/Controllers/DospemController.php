@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Dospem;
 
 class DospemController extends Controller
 {
-    public function index() 
+    public function index(Request $request) 
     {
-        $dospem = \App\Models\Dospem::query()
+        $searchQuery = $request->input('search');
+
+        $dospem = Dospem::query()
         ->select('dospem.*', 'prodi.nama as prodi')
         ->join('prodi', 'dospem.prodi_id', '=', 'prodi.id')
+        ->when($searchQuery, function ($query) use ($searchQuery) {
+            $query->where('dospem.nik', 'like', "%$searchQuery%")
+                ->orWhere('dospem.nama', 'like', "%$searchQuery%");
+        })
         ->get();
 
         return view('dospem.index', [

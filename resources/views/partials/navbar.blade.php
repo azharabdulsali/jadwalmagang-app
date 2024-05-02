@@ -21,12 +21,12 @@
                   <li class="nav-item">
                       <form action="{{ route('logout') }}" method="POST">
                           @csrf
-                          <button type="submit" class="btn btn-link">Logout</button>
+                          <button type="submit" class="btn btn-danger">Logout</button>
                       </form>
                   </li>
               @else
                   <li class="nav-item">
-                      <a href="/login" class="nav-link">Login</a>
+                      <a href="/login" class="btn btn-primary">Login</a>
                   </li>
               @endif
           </ul>

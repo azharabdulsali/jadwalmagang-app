@@ -129,7 +129,7 @@ class JadwalMagangController extends Controller
             'jadwalMagang' => \App\Models\JadwalMagang::all(),
         ];
 
-        dd($data);
+        // dd($data);
 
         // $pdf = PDF::loadView('/jadwalMagang.index-pdf', $data);
 
