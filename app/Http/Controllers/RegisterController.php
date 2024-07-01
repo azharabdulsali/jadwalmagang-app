@@ -5,26 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class RegisterController extends Controller
 {
-    public function create()
+    public function register()
     {
-        return view('register.create');
+        return view('register.index');
     }
 
-    public function store(Request $request)
+    public function actionregister(Request $request)
     {
-        $validatedData = $request->validate([
-            'username' => 'required|unique:users',
-            'password' => 'required|min:8',
-        ]);
-
         $user = User::create([
-            'username' => $validatedData['username'],
-            'password' => Hash::make($validatedData['password']),
+            'nama' => $request->nama,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'active' => 1
         ]);
 
-        return redirect('/login')->with('success', 'User successfully registered!');
+        Session::flash('message', 'Register Berhasil. Akun Anda sudah Aktif, silahkan Login menggunakan username dan password.');
+        return redirect()->route('register');
     }
 }

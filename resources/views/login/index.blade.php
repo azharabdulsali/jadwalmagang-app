@@ -19,7 +19,9 @@
         @endif
 
         <main class="form-signin w-100 m-auto">
-            <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
+            <h1 class="h3 mb-3 fw-normal text-center">
+              <hr>
+              <p class=""></p>Login</h1>
             <form action="/login" method="post">
               @csrf
               <div class="form-floating">
@@ -36,6 +38,8 @@
                 <label for="password">Password</label>
               </div>
               <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
+              <hr>
+              <p class="text-center">Belum punya akun? <a href="/register">Register</a> sekarang!</p>
             </form>
           </main>
     </div>

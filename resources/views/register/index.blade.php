@@ -3,29 +3,43 @@
 @extends('layouts.main')
 
 @section('container')
-<div class="row justify-content-center">
-    <div class="col-md-6">
-
-        <main class="form-signin w-100 m-auto">
-            <h1 class="h3 mb-3 fw-normal text-center">Register</h1>
-            <form action="/register" method="post">
-              @csrf
-              <div class="form-floating">
-                <input type="username" name="username" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Username" autofocus required>
-                <label for="username">Username</label>
-                @error('username')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
+<body>
+  <div class="container"><br>
+      <div class="col-md-6 col-md-offset-3">
+          <h2 class="text-center">FORM REGISTER USER</h2>
+          <hr>
+          @if(session('message'))
+          <div class="alert alert-success">
+              {{ session('message') }}
+          </div>
+          @endif
+          <form action="{{ route('actionregister') }}" method="post">
+          @csrf
+              <div class="form-group">
+                  <label><i class="fa fa-envelope"></i> Nama</label>
+                  <input type="text" name="nama" class="form-control" placeholder="Nama" required="">
               </div>
-              <div class="form-floating">
-                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
-                <label for="password">Password</label>
+              <div class="form-group">
+                  <label><i class="fa fa-user"></i> Username</label>
+                  <input type="text" name="username" class="form-control" placeholder="Username" required="">
               </div>
-              <button class="btn btn-primary w-100 py-2" type="submit">Register</button>
-            </form>
-          </main>
-    </div>
-</div>
+              <div class="form-group">
+                  <label><i class="fa fa-key"></i> Password</label>
+                  <input type="password" name="password" class="form-control" placeholder="Password" required="">
+              </div>
+              <div class="form-group">
+                  <label><i class="fa fa-key"></i> Confirm Password</label>
+                  <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required="">
+              </div>
+              <div class="form-group">
+                  <label><i class="fa fa-address-book"></i> Role</label>
+                  <input type="text" name="role" class="form-control" value="Guest" readonly>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-user"></i> Register</button>
+              <hr>
+              <p class="text-center">Sudah punya akun silahkan <a href="/login">Login Disini!</a></p>
+          </form>
+      </div>
+  </div>
+</body>
 @endsection
